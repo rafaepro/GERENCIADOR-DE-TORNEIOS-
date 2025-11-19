@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Gerenciamento de Torneios</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Theme Definitions */
+        :root {
+            --primary: #00FFFF;
+            --secondary: #6A00FF;
+            --accent: #00BFFF;
+            --bg-start: #00010F;
+            --bg-end: #0A0A2E;
+            --text-glow: #00FFFF;
+            --border-color: #00FFFF;
+            --bg-image: none; /* Default no image */
+            --overlay-opacity: 0.0;
+        }
+
+        /* Theme 1: Cyberpunk (Default) */
+        .theme-cyberpunk {
+            --primary: #00FFFF;
+            --secondary: #6A00FF;
+            --accent: #00BFFF;
+            --bg-start: #00010F;
+            --bg-end: #0A0A2E;
+            --text-glow: #00FFFF;
+            --border-color: #00FFFF;
+            --bg-image: none;
+            --overlay-opacity: 0;
+        }
+
+        /* Theme 2: Green Field (Real Football) */
+        .theme-green {
+            --primary: #00FF00;
+            --secondary: #006400;
+            --accent: #32CD32;
+            --bg-start: #001a00;
+            --bg-end: #003300;
+            --text-glow: #00FF00;
+            --border-color: #00FF00;
+            --bg-image: url('https://img.freepik.com/free-photo/soccer-field-background_1409-3145.jpg?w=1380');
+            --overlay-opacity: 0.7;
+        }
+
+        /* Theme 3: Red Fire (Digital Aggressive) */
+        .theme-red {
+            --primary: #FF4500;
+            --secondary: #8B0000;
+            --accent: #FF0000;
+            --bg-start: #1a0000;
+            --bg-end: #330000;
+            --text-glow: #FF4500;
+            --border-color: #FF4500;
+            --bg-image: url('https://img.freepik.com/free-vector/red-abstract-background-design_23-2148890927.jpg');
+            --overlay-opacity: 0.6;
+        }
+
+        /* Theme 4: Royal Gold (Premium Real) */
+        .theme-gold {
+            --primary: #FFD700;
+            --secondary: #191970;
+            --accent: #DAA520;
+            --bg-start: #000000;
+            --bg-end: #101030;
+            --text-glow: #FFD700;
+            --border-color: #FFD700;
+            --bg-image: url('https://img.freepik.com/free-vector/golden-confetti-black-background_1017-30503.jpg');
+            --overlay-opacity: 0.8;
+        }
+
+        /* Theme 5: Ice Blue (Clean Digital) */
+        .theme-blue {
+            --primary: #E0FFFF;
+            --secondary: #4682B4;
+            --accent: #87CEEB;
+            --bg-start: #05101a;
+            --bg-end: #0a2035;
+            --text-glow: #E0FFFF;
+            --border-color: #87CEEB;
+            --bg-image: url('https://img.freepik.com/free-vector/blue-futuristic-networking-technology-background-vector_53876-100679.jpg');
+            --overlay-opacity: 0.8;
+        }
+
+        /* Theme 6: FC Tactical (Inspired by EA FC) */
+        .theme-fc {
+            --primary: #33FF57;
+            --secondary: #1A1A1A;
+            --accent: #DFFF00;
+            --bg-start: #0a0a0a;
+            --bg-end: #141414;
+            --text-glow: #33FF57;
+            --border-color: #33FF57;
+            --bg-image: url('https://wallpapers.com/images/hd/ea-sports-fc-24-cover-concept-art-w0n7w4j6j4j6j4j6.jpg'); /* Concept abstract */
+            --overlay-opacity: 0.9;
+        }
+
+        /* Theme 7: E-Pro (Inspired by eFootball) */
+        .theme-efootball {
+            --primary: #0055FF;
+            --secondary: #FFCC00;
+            --accent: #FF0055;
+            --bg-start: #000033;
+            --bg-end: #1a004d;
+            --text-glow: #0055FF;
+            --border-color: #FFCC00;
+            --bg-image: url('https://wallpapers.com/images/hd/efootball-2024-messi-blue-background-2k4k2k4k2k4k2k4k.jpg'); /* Blue abstract */
+            --overlay-opacity: 0.85;
+        }
+
+        /* Theme 8: Striker (Inspired by UFL) */
+        .theme-ufl {
+            --primary: #FFFFFF;
+            --secondary: #000000;
+            --accent: #00FFCC;
+            --bg-start: #0f0f0f;
+            --bg-end: #262626;
+            --text-glow: #FFFFFF;
+            --border-color: #CCCCCC;
+            --bg-image: none;
+            --overlay-opacity: 0;
+        }
+
+        /* --- NEW TOURNAMENT THEMES --- */
+
+        /* Champions League */
+        .theme-champions {
+            --primary: #3a6cf4; /* UCL Blue */
+            --secondary: #0e1e5b; /* Dark Navy */
+            --accent: #ffffff; /* Stars White */
+            --bg-start: #000033;
+            --bg-end: #0e1e5b;
+            --text-glow: #3a6cf4;
+            --border-color: #3a6cf4;
+            /* Starball background */
+            --bg-image: url('https://c4.wallpaperflare.com/wallpaper/527/697/641/uefa-champions-league-soccer-uefa-blue-wallpaper-preview.jpg');
+            --overlay-opacity: 0.75;
+        }
+
+        /* Europa League */
+        .theme-europa {
+            --primary: #fca311; /* Energy Orange */
+            --secondary: #000000; /* Black */
+            --accent: #ffdd00;
+            --bg-start: #1a0a00;
+            --bg-end: #000000;
+            --text-glow: #fca311;
+            --border-color: #fca311;
+            /* Orange energy wave */
+            --bg-image: url('https://wallpapers.com/images/hd/europa-league-trophy-closeup-e34k52k52k52k52k.jpg');
+            --overlay-opacity: 0.85;
+        }
+
+        /* World Cup */
+        .theme-worldcup {
+            --primary: #cda434; /* Gold */
+            --secondary: #56042c; /* Maroon/Red */
+            --accent: #ffffff;
+            --bg-start: #3a001e;
+            --bg-end: #1a000d;
+            --text-glow: #cda434;
+            --border-color: #cda434;
+            /* Trophy or abstract pattern */
+            --bg-image: url('https://wallpapers.com/images/hd/fifa-world-cup-trophy-dark-background-52k52k52k52k52k.jpg');
+            --overlay-opacity: 0.7;
+        }
+
+        /* Mundial de Clubes */
+        .theme-mundial {
+            --primary: #00cfb7; /* Turquoise */
+            --secondary: #1a1a1a;
+            --accent: #d4af37; /* Gold accents */
+            --bg-start: #002222;
+            --bg-end: #001111;
+            --text-glow: #00cfb7;
+            --border-color: #00cfb7;
+            /* Modern tech/globe background */
+            --bg-image: url('https://wallpapers.com/images/hd/fifa-club-world-cup-trophy-blue-light-52k52k52k52k52k.jpg');
+            --overlay-opacity: 0.8;
+        }
+
+
+        body {
+            font-family: 'Orbitron', 'Audiowide', 'Arial', sans-serif;
+            /* Logic: Gradient overlay (opacity controlled by var) + Background Image + Fallback Gradient */
+            background: 
+                linear-gradient(rgba(0,0,0,var(--overlay-opacity)), rgba(0,0,0,var(--overlay-opacity))),
+                var(--bg-image),
+                linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 50%, var(--bg-start) 100%);
+            
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            
+            color: #FFFFFF;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: background 0.5s ease;
+        }
+
+        /* Dynamic Classes using CSS Vars */
+        .text-primary { color: var(--primary); }
+        .text-secondary { color: var(--secondary); }
+        .border-primary { border-color: var(--primary); }
+        .bg-primary-gradient { background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%); }
+        .shadow-primary { box-shadow: 0 0 20px var(--primary); }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-end); 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary); 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary); 
+        }
+
+        /* Custom Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.4; }
+            50% { transform: translateY(-25px) translateX(15px); opacity: 0.8; }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(var(--primary), 0.5), 0 0 40px rgba(var(--primary), 0.3); }
+            50% { box-shadow: 0 0 30px var(--primary), 0 0 60px var(--primary); }
+        }
+
+        @keyframes text-glow {
+            0%, 100% { text-shadow: 0 0 10px var(--text-glow), 0 0 20px var(--text-glow); }
+            50% { text-shadow: 0 0 15px var(--text-glow), 0 0 30px var(--text-glow), 0 0 45px var(--accent); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 30px var(--primary); }
+            to { text-shadow: 0 0 50px var(--primary), 0 0 70px var(--primary); }
+        }
+
+        @keyframes pulse-bg {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+            50% { transform: scale(1.05) rotate(1deg); opacity: 0.9; }
+        }
+
+        .animate-float { animation: float 8s infinite ease-in-out; }
+        .animate-pulse-glow { animation: pulse-glow 3s infinite ease-in-out; }
+        .animate-text-glow { animation: text-glow 2.5s infinite ease-in-out; }
+        .animate-fade-in { animation: fadeIn 0.6s ease-out; }
+        .animate-glow-text { animation: glow 2s infinite alternate; }
+        .animate-pulse-bg { animation: pulse-bg 4s infinite; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
